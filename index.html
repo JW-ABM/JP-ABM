@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>墨金卖家系统</title>
+    <style>
+        body { background: #0a0a0a; color: #fff; font-family: sans-serif; display: flex; justify-content: center; padding-top: 50px; }
+        .box { background: #1a1a1a; padding: 40px; border-radius: 12px; width: 320px; text-align: center; border: 1px solid #333; }
+        input { width: 100%; padding: 12px; margin: 10px 0; background: #222; border: 1px solid #444; color: #fff; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #c5a059; border: none; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h3>墨金卖家系统</h3>
+    <input type="email" id="email" placeholder="请输入经营邮箱">
+    <input type="text" id="code" placeholder="输入验证码">
+    <button onclick="sendCode()">获取验证码</button>
+    <button onclick="login()" style="background:#444; margin-top:10px;">绑定并进入系统</button>
+</div>
+
+<script>
+    async function sendCode() {
+        const email = document.getElementById('email').value;
+        if(!email) return alert("请输入邮箱");
+        try {
+            const res = await fetch('/api/send-code', { 
+                method: 'POST', 
+                body: JSON.stringify({ email }) 
+            });
+            const data = await res.json();
+            alert(data.message);
+        } catch (e) {
+            alert("请求发送失败，请检查部署配置");
+        }
+    }
+    async function login() { alert("身份核验中..."); }
+</script>
+</body>
+</html>
